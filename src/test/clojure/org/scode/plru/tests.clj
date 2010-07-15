@@ -40,5 +40,12 @@
           [val _] (plru/lru-get c3 "key1")]
       (is (= nil val) "key1 should now be evicted"))))
 
+(deftest nil-values
+  (let [c (plru/lru-put (plru/make-lru 2) "key1" nil)]
+    (is (= nil (let [[val _] (plru/lru-get c "key1" "default")] val))
+        "nil value should be found by get")
+    (is (= nil (plru/lru-peak c "key1" "default"))
+        "nil value should be found by peak")))
+
 (run-tests)
 

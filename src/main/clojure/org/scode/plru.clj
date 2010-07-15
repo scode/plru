@@ -38,8 +38,6 @@
 resulting cache. If the cache is full, the returned cache will have
 evicted the least recently used entry contained in the cache."
   [cache key value]
-  (assert (not (= nil value))) ; nil is not supported
-
   (let [had-key (contains? (:kvmap cache) key)
         should-remove (and (not had-key) (>= (:size cache) (:max-size cache)))
         new-kvmap (conj (:kvmap cache) [key value])
