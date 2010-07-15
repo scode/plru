@@ -89,8 +89,6 @@ entry in the cache)."
   ([cache key]
      (lru-peak cache key nil))
   ([cache key not-found]
-     (let [not-found-sym (gensym)
-           value (get cache :kvmap not-found-sym)]
-       (if (= value not-found-sym)
-         not-found
-         value))))
+     (if (contains? (:kvmap cache) key)
+       (get (:kvmap cache) key)
+       not-found)))
