@@ -35,7 +35,7 @@
 
 (defn lru-put
   "Returns a new cache with the given value inserted, associated with
-   the given key. If t he cache is full, the returned cache will be
+   the given key. If the cache is full, the returned cache will be
    missing the least recently used entry already contained in the
    cache."
   [cache key value]
