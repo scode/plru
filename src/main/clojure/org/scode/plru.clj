@@ -34,10 +34,9 @@
           [:size (- (:size cache) 1)])))
 
 (defn lru-put
-  "Returns a new cache with the given value inserted, associated with
-   the given key. If the cache is full, the returned cache will be
-   missing the least recently used entry already contained in the
-   cache."
+  "Put the given key/value association in the cache, and return the
+resulting cache. If the cache is full, the returned cache will have
+evicted the least recently used entry contained in the cache."
   [cache key value]
   (assert (not (= nil value))) ; nil is not supported
 
@@ -63,14 +62,13 @@
         new-cache))))
 
 (defn lru-get
-  "Returns [value new-cache], where new-cache is a new cache with its
-   internal statistics updated to reflect the fact the the value
-   associated with the given key was accessed (i.e., it is the most
-   recently used entry in the cache).
-
-   The optional parameter not-found is the object that will be
-   returned if there is no entry in the cache by the given key. If not
-   given, the default is nil."
+  "Get a value from the cache, if there is one. The optional parameter
+not-found is the object that will be returned if there is no entry in
+the cache by the given key. If not given, the default is nil. Returns
+[value new-cache], where value is the value obtained (or the default),
+and new-cache is the new version of the cache updated to reflect the
+fact that the key was accessed (i.e., it is now the most recently used
+entry in the cache)."
   ([cache key]
      (lru-get cache key nil))
   ([cache key not-found]
