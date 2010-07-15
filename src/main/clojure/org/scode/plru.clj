@@ -72,17 +72,15 @@ entry in the cache)."
   ([cache key]
      (lru-get cache key nil))
   ([cache key not-found]
-     (let [not-found-sym (gensym)
-           value (get cache :kvmap not-found-sym)]
-       (if (= value not-found-sym)
-         not-found
+     (if (contains? (:kvmap cache) key)
          (let [new-rkmap (conj (dissoc (:rkmap cache) ((:krmap cache) key)) [(:mutation-counter cache) key])
                new-krmap (conj (dissoc (:krmap cache) key) [key (:mutation-counter cache)])
                new-mutation-counter (+ 1 (:mutation-counter cache))]
-           [value (conj cache
+           [(get (:kvmap cache) key) (conj cache
                         [:rkmap new-rkmap]
                         [:krmap new-krmap]
-                        [:mutation-counter new-mutation-counter])])))))
+                        [:mutation-counter new-mutation-counter])])
+          [not-found cache])))
 
 (defn lru-peak
   "Like lru-get except it only returns the value obtained, and makes
