@@ -47,5 +47,10 @@
     (is (= nil (plru/lru-peak c "key1" "default"))
         "nil value should be found by peak")))
 
+(deftest lru-contains?
+  (let [c (plru/lru-put (plru/make-lru 2) "key1" "value")]
+    (is (plru/lru-contains? c "key1"))
+    (is (not (plru/lru-contains? c "key2")))))
+
 (run-tests)
 
