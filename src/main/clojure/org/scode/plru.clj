@@ -17,6 +17,7 @@
     :mutation-counter 0 })
 
 (defn- remove-oldest
+  "pre-condition: cache is non-empty"
   [cache]
   (let [[recenticity key] (first (:rkmap cache))]
     (conj cache
