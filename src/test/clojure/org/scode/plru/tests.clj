@@ -10,25 +10,25 @@
   (let [[val _] (plru/lru-get (plru/make-lru 2) "key")]
     (is (= nil val) "empty lru should give nil back")))
 
-(deftest peak-non-existing
-  (is (= nil (plru/lru-peak (plru/make-lru 2) "key")) "empty lru should peak nil"))
+(deftest peek-non-existing
+  (is (= nil (plru/lru-peek (plru/make-lru 2) "key")) "empty lru should peek nil"))
 
 (deftest get-default
   (let [[val _] (plru/lru-get (plru/make-lru 2) "key" "defaultval")]
     (is (= "defaultval" val) "default value should be given on non-existent key")))
 
-(deftest peak-default
-  (is (= "default" (plru/lru-peak (plru/make-lru 2) "key" "default"))
-      "empty lru should peak default value"))
+(deftest peek-default
+  (is (= "default" (plru/lru-peek (plru/make-lru 2) "key" "default"))
+      "empty lru should peek default value"))
 
 (deftest get-existing
   (let [c (plru/lru-put (plru/make-lru 10) "key" "value")
         [val _] (plru/lru-get c "key")]
     (is (= "value" val) "should get existing value assocaited with key")))
 
-(deftest peak-existing
+(deftest peek-existing
   (let [c (plru/lru-put (plru/make-lru 10) "key" "value")]
-    (is (= "value" (plru/lru-peak c "key")))))
+    (is (= "value" (plru/lru-peek c "key")))))
 
 (deftest eviction-of-unused
   (let [c (plru/make-lru 2)
@@ -44,8 +44,8 @@
   (let [c (plru/lru-put (plru/make-lru 2) "key1" nil)]
     (is (= nil (let [[val _] (plru/lru-get c "key1" "default")] val))
         "nil value should be found by get")
-    (is (= nil (plru/lru-peak c "key1" "default"))
-        "nil value should be found by peak")))
+    (is (= nil (plru/lru-peek c "key1" "default"))
+        "nil value should be found by peek")))
 
 (deftest lru-contains?
   (let [c (plru/lru-put (plru/make-lru 2) "key1" "value")]
@@ -54,10 +54,10 @@
 
 (deftest max-size-1
   (let [c (plru/lru-put (plru/make-lru 1) "key" "value")]
-    (is (= "value" (plru/lru-peak c "key")))
+    (is (= "value" (plru/lru-peek c "key")))
     (is (= "value" (let [[val _] (plru/lru-get c "key")] val)))
     (let [c2 (plru/lru-put c "key2" "value2")]
-      (is (= "value2" (plru/lru-peak c2 "key2"))))))
+      (is (= "value2" (plru/lru-peek c2 "key2"))))))
 
 (run-tests)
 

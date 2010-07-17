@@ -73,12 +73,12 @@ entry in the cache)."
                         [:mutation-counter new-mutation-counter])])
           [not-found cache])))
 
-(defn lru-peak
+(defn lru-peek
   "Like lru-get except it only returns the value obtained, and makes
    no attempt to create a new cache reflecting the access in its
    internal data structure."
   ([cache key]
-     (lru-peak cache key nil))
+     (lru-peek cache key nil))
   ([cache key not-found]
      (if (contains? (:kvmap cache) key)
        (get (:kvmap cache) key)
