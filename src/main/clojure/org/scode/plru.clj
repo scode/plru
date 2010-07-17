@@ -8,7 +8,7 @@
    size determines when entries are evicted from the cache to make
    room for new ones."
   [max-size]
-  (assert (> max-size 1)) ; impl currently does not support 0 and 1
+  (assert (> max-size 0))
   { :kvmap {}                ; key/value map of actual items
     :rkmap (sorted-map)      ; recenticity -> key
     :krmap {}                ; key -> recenticity

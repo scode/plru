@@ -52,5 +52,12 @@
     (is (plru/lru-contains? c "key1"))
     (is (not (plru/lru-contains? c "key2")))))
 
+(deftest max-size-1
+  (let [c (plru/lru-put (plru/make-lru 1) "key" "value")]
+    (is (= "value" (plru/lru-peak c "key")))
+    (is (= "value" (let [[val _] (plru/lru-get c "key")] val)))
+    (let [c2 (plru/lru-put c "key2" "value2")]
+      (is (= "value2" (plru/lru-peak c2 "key2"))))))
+
 (run-tests)
 
