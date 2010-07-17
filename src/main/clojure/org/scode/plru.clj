@@ -90,6 +90,7 @@ entry in the cache)."
      (if (contains? (:kvmap cache) key)
        (get (:kvmap cache) key)
        not-found)))
+
 (defn lru-contains?
   "Returns whether the cache contains the given key."
   [cache key]
