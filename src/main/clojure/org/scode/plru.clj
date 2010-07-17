@@ -3,25 +3,17 @@
      :doc "A persistent LRU (Least-Recently-Used) cache."}
   org.scode.plru)
 
-(defn- guaranteeing
-  "Guarantees (by asserting) that (ok? val) evaluates to true, then
-   returns val."
-  ([ok? val reason]
-     (guaranteeing ok? val))
-  ([ok? val]
-     (assert (ok? val))
-     val))
-
 (defn make-lru
   "Create an empty LRU cache with the given maximum size. The maximum
    size determines when entries are evicted from the cache to make
    room for new ones."
   [max-size]
+  (assert (> max-size 1)) ; impl currently does not support 0 and 1
   { :kvmap {}                ; key/value map of actual items
     :rkmap (sorted-map)      ; recenticity -> key
     :krmap {}                ; key -> recenticity
     :size 0
-    :max-size (guaranteeing #(> %1 1) max-size "implementation breaks if less than 2"),
+    :max-size max-size
     :mutation-counter 0 })
 
 (defn- remove-oldest
