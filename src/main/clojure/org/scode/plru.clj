@@ -5,8 +5,8 @@
 
 (defn make-lru
   "Create an empty LRU cache with the given maximum size. The maximum
-   size determines when entries are evicted from the cache to make
-   room for new ones."
+size determines when entries are evicted from the cache to make
+room for new ones."
   [max-size]
   (assert (> max-size 0))
   { :kvmap {}                ; key/value map of actual items
