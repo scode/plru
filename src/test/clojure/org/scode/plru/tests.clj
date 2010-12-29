@@ -59,5 +59,12 @@
     (let [c2 (plru/lru-put c "key2" "value2")]
       (is (= "value2" (plru/lru-peek c2 "key2"))))))
 
+(deftest resize
+  (let [c (plru/lru-put (plru/lru-put (plru/lru-put (plru/lru-put (plru/make-lru 4) "key1" "value") "key2" "value") "key3" "value") "key4" "value")
+        resized (plru/lru-resize c 2)]
+    (is (= "value" (plru/lru-peek c "key4")) "lru should basically work first")
+    (is (= nil (plru/lru-peek resized "key1")) "key1 should have been eviced")
+    (is (= nil (plru/lru-peek resized "key2")) "key2 should have been evicted")))
+
 (run-tests)
 

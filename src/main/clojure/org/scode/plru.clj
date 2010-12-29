@@ -88,3 +88,12 @@ entry in the cache)."
   "Returns whether the cache contains the given key."
   [cache key]
   (contains? (:kvmap cache) key))
+
+(defn lru-resize
+  "Adjust the maximum size of the cache. If decreased, entries that exceed the desired size will be evicted (complexity O(n))."
+  [cache new-size]
+  (let [evict (fn [cache]
+                (if (> (:size cache) new-size)
+                  (recur (remove-oldest cache))
+                  cache))]
+    (conj (evict cache) [:max-size new-size])))
