@@ -9,7 +9,7 @@
   <groupId>org.scode</groupId>
   <artifactId>plru</artifactId>
   <packaging>jar</packaging>
-  <version>1.0-SNAPSHOT</version>
+  <version>1.0.0-SNAPSHOT</version>
   <description>Clojure LRU cache based on persistent data structures</description>
   <name>plru</name>
   <url>https://github.com/scode/plru</url>
