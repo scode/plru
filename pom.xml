@@ -47,11 +47,6 @@
       <version>1.2.0</version>
     </dependency>
     <dependency>
-      <groupId>org.clojure</groupId>
-      <artifactId>clojure-contrib</artifactId>
-      <version>1.2.0</version>
-    </dependency>
-    <dependency>
       <!-- For mvn clojure:repl -->
       <groupId>jline</groupId>
       <artifactId>jline</artifactId>
